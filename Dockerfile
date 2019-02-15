@@ -24,9 +24,11 @@ RUN apk add --update ca-certificates \
 
 
 # 可自行初始化 helm repo
-# RUN helm init --client-only --stable-repo-url http://charts.uniteidea.cn
+# RUN helm init --client-only --stable-repo-url http://xxx.xxx.xx
 
 # 可自行拷贝 kube config 文件以便能连接到 K8S 集群
 # COPY kubeconfig /root/.kube/config
 
 WORKDIR /project
+
+CMD [ "kubectl", "help" ]
