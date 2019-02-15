@@ -5,7 +5,8 @@
 
 FROM alpine
 
-RUN apk add --update --no-cache ca-certificates curl wget bash \
+RUN apk add --update ca-certificates \
+ && apk add --update -t wget \
  && wget https://storage.googleapis.com/kubernetes-helm/helm-v2.12.3-linux-amd64.tar.gz \
  && wget https://storage.googleapis.com/kubernetes-release/release/v1.13.3/kubernetes-client-linux-amd64.tar.gz \
  && tar -zxvf helm-v2.12.3-linux-amd64.tar.gz \
@@ -18,7 +19,9 @@ RUN apk add --update --no-cache ca-certificates curl wget bash \
  && rm -rf kubernetes \
  && chmod +x /usr/local/bin/helm \
  && chmod +x /usr/local/bin/kubectl \
- && mkdir -p ~/.kube 
+ && mkdir -p ~/.kube \
+ && rm /var/cache/apk/*
+
 
 # 可自行初始化 helm repo
 # RUN helm init --client-only --stable-repo-url http://charts.uniteidea.cn
@@ -27,5 +30,3 @@ RUN apk add --update --no-cache ca-certificates curl wget bash \
 # COPY kubeconfig /root/.kube/config
 
 WORKDIR /project
-
-ENTRYPOINT [ "/bin/bash" ]
